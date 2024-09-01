@@ -2,6 +2,8 @@
 
 **Mental Math Drill** is a simple, web-based tool designed to help improve working memory through the practice of mental arithmetic. By engaging in regular drills, users can strengthen their ability to hold and manipulate information in their minds, leading to improved cognitive function and better performance in tasks requiring focus and memory.
 
+Check it here: https://mehdi-sabouri.github.io/mental-math-drill/
+
 ## Table of Contents
 
 - [What is Working Memory?](#what-is-working-memory)
