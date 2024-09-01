@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Math Drill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .math-problem {
+            font-size: 24px;
+            margin: 20px;
+        }
+        .result {
+            margin: 20px;
+            font-size: 18px;
+        }
+        .controls {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mental Math Drill</h1>
+    <div class="controls">
+        <label for="operation-count">Number of Operations: </label>
+        <input type="number" id="operation-count" value="3" min="1" max="10">
+        <button onclick="generateMathProblem()">Generate New Problem</button>
+    </div>
+    <div class="math-problem" id="math-problem"></div>
+    <input type="number" id="user-answer" placeholder="Enter your answer">
+    <button onclick="checkAnswer()">Submit</button>
+    <div class="result" id="result"></div>
+    <div class="streak">Current Streak: <span id="streak">0</span></div>
+    <script>
+        let currentAnswer = 0;
+        let streak = 0;
+
+        // Function to generate a random number between min and max
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Function to generate a random math expression
+        function generateMathProblem() {
+            let expression = '';
+            let answer = 0;
+            const numberOfParts = parseInt(document.getElementById('operation-count').value);
+
+            for (let i = 0; i < numberOfParts; i++) {
+                let num1 = randomInt(2, 20);
+                let num2 = (num1 < 10) ? randomInt(2, 20) : randomInt(2, 10);
+                let operation = `(${num1} × ${num2})`;
+                let partialResult = num1 * num2;
+
+                if (i === 0) {
+                    expression = operation;
+                    answer = partialResult;
+                } else {
+                    let operator = randomInt(0, 1) === 0 ? ' + ' : ' − ';
+                    expression += `${operator}${operation}`;
+                    answer = operator.trim() === '+' ? answer + partialResult : answer - partialResult;
+                }
+            }
+
+            document.getElementById('math-problem').innerText = expression;
+            currentAnswer = answer;
+        }
+
+        // Function to check the user's answer
+        function checkAnswer() {
+            let userAnswer = parseInt(document.getElementById('user-answer').value);
+            if (userAnswer === currentAnswer) {
+                streak++;
+                document.getElementById('result').innerText = 'Correct!';
+            } else {
+                streak = 0;
+                document.getElementById('result').innerText = `Incorrect. The correct answer was ${currentAnswer}.`;
+            }
+            document.getElementById('streak').innerText = streak;
+            document.getElementById('user-answer').value = '';
+            generateMathProblem();
+        }
+
+        // Generate the first math problem on page load
+        window.onload = generateMathProblem;
+    </script>
+</body>
+</html>
